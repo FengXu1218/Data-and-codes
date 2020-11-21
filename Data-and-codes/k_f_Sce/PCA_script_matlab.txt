@@ -1,0 +1,15 @@
+clear temp
+temp=allsKMdist([1:12 19:21], [1:12 19:21]);
+temp_mean=mean(temp);
+[coeff,score,latent,tsquared,explained,mu] = pca(temp);
+
+***************Project SC data to KM's PCA space***********************
+for i=1:14
+   temp_score(:,i)=score(:,i)/latent(i);
+end;
+tempY=temp_score/14;
+
+temp_sc=allsKMdist([22:60], [1:12 19:21]);
+temp_sc=temp_sc-temp_mean;
+
+coeff_km=temp_sc*tempY;
